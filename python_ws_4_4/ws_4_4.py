@@ -1,5 +1,5 @@
 import requests
-from pprint import pprint as print
+from pprint import pprint
 
 black_list = [
     'Hoeger LLC',

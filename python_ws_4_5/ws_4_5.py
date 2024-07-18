@@ -307,7 +307,7 @@ def create_user(receive_data_list):
     for receive_data_dict in receive_data_list:
         temp_result = is_validation(receive_data_dict)
         result.append(temp_result) 
-
+    
     count = 0
     fin_results = []
     # 잘못된 부분들을 정리한 리스트를 이용해 잘못된 부분을 수정 후 새 리스트에 담음
