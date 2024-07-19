@@ -44,11 +44,11 @@
 ## 05-pjt
 - **프롬프트 화면 캡쳐**
   - 첫 프롬프트
-  ![alt text](prompt_1.PNG)  
+  ![alt text](image.png)
 
   - 무료 버전 조건을 추가한 프롬프트  
-  ![alt text](prompt_2.PNG)
-  ![alt text](fail_result.PNG)  
+  ![alt text](image-1.png)
+  ![alt text](image-2.png)
 
 - **Code**
   ```python
@@ -96,7 +96,7 @@
   ```
   
 - **실행 결과**
-  ![alt text](code_result.PNG)  
+  ![alt text](image-3.png)
   
 - **새로 배운 점**
   - 생성형 AI의 효율성  
