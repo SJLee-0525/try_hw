@@ -18,13 +18,14 @@ def get_weather(api_key):
     mini_result['기압'] = temp_result['main']['pressure']
     mini_result['습도'] = temp_result['main']['humidity']
     mini_result['온도'] = temp_result['main']['temp']
-    mini_result['온도 (섭씨)'] = round(temp_result['main']['temp'] - 273.15, 2)
+    mini_result['온도 (섭씨)'] = round(temp_result['main']['temp'] - 273.15, 2) # round(수, 자리수)
     mini_result['체감온도'] = temp_result['main']['feels_like']
     mini_result['체감온도 (섭씨)'] = round(temp_result['main']['feels_like'] - 273.15, 2)
     mini_result['최고온도'] = temp_result['main']['temp_max']
     mini_result['최고온도 (섭씨)'] = round(temp_result['main']['temp_max'] - 273.15, 2)
     mini_result['최저온도'] = temp_result['main']['temp_min']
     mini_result['최저온도 (섭씨)'] = round(temp_result['main']['temp_min'] - 273.15, 2)
+
 
     mini_result_2 = {}
     mini_result_2['요약'] = temp_result['weather_data'][0]['description']
@@ -49,3 +50,15 @@ if __name__ == '__main__':
 
     result = get_weather(api_key)
     pprint(result)
+
+# {'기본': {'기압': 1008,
+#         '습도': 94,
+#         '온도': 298.66,
+#         '온도 (섭씨)': 25.51,
+#         '체감온도': 299.72,
+#         '체감온도 (섭씨)': 26.57,
+#         '최고온도': 298.91,
+#         '최고온도 (섭씨)': 25.76,
+#         '최저온도': 297.81,
+#         '최저온도 (섭씨)': 24.66},
+#  '날씨': [{'식별자': 803, '아이콘': '04n', '요약': 'broken clouds', '핵심': 'Clouds'}]}

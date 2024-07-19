@@ -26,3 +26,16 @@ if __name__ == '__main__':
 
     result = get_weather(api_key)
     pprint(result)
+
+# {'main': {'feels_like': 299.72,
+#           'grnd_level': 1002,
+#           'humidity': 94,
+#           'pressure': 1008,
+#           'sea_level': 1008,
+#           'temp': 298.66,
+#           'temp_max': 298.91,
+#           'temp_min': 297.81},
+#  'weather_data': [{'description': 'broken clouds',
+#                    'icon': '04n',
+#                    'id': 803,
+#                    'main': 'Clouds'}]}

@@ -27,3 +27,5 @@ if __name__ == '__main__':
     result = get_deposit_products()
     # prrint.prrint(): json 을 보기 좋은 형식으로 출력
     pprint.pprint(result)
+
+# dict_keys(['prdt_div', 'total_count', 'max_page_no', 'now_page_no', 'err_cd', 'err_msg', 'baseList', 'optionList'])

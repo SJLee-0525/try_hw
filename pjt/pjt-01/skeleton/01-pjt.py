@@ -23,3 +23,5 @@ if __name__ == '__main__':
 
     result = get_weather(api_key)
     pprint(result)
+
+# dict_keys(['coord', 'weather', 'base', 'main', 'visibility', 'wind', 'clouds', 'dt', 'sys', 'timezone', 'id', 'name', 'cod'])
