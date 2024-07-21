@@ -1,7 +1,7 @@
 import requests
 import time
 
-API_KEY = 'd041d5b2deed53c8decf301f3fbadcb3'  # OpenWeatherMap API 키를 입력하세요.
+API_KEY = '입력하세요'  # OpenWeatherMap API 키를 입력하세요.
 CITY = 'Seoul,KR'
 LAT = 37.5665  # 서울의 위도
 LON = 126.9780  # 서울의 경도

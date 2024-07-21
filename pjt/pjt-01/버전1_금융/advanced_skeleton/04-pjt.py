@@ -16,7 +16,7 @@ import requests
 
 def get_deposit_products():
     # 본인의 API KEY 로 수정합니다.
-    api_key = 'c19ae7f523953ee767f19e9217fb618e'
+    api_key = '입력하세요'
 
     # 요구사항에 맞도록 이곳의 코드를 수정합니다.
     url = f'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?auth={api_key}&topFinGrpNo=020000&pageNo=1'
@@ -26,11 +26,9 @@ def get_deposit_products():
 
     fin_cd_list = []
     # 금융상품 코드들을 추출해서 fin_cd_list에 담음
-    for i in range(len(response['result']['optionList'])):
-        fin_cd_list.append(response['result']['optionList'][i]['fin_prdt_cd'])
-
-    # fin_cd_list 요소들의 중복 제거
-    fin_cd_list = list(set(fin_cd_list))
+    for i in range(len(response['result']['baseList'])):
+        fin_cd_list.append(response['result']['baseList'][i]['fin_prdt_cd'])
+    # ['WR0001B', '00320342', '10511008000996000', '10511008001004000', ... 10-01-20-388-0002', '1001202000002']
 
     temp_list_dict = {}
     # fin_cd_list에 들은 금융상품 코드들을 하나씩 가져옴
