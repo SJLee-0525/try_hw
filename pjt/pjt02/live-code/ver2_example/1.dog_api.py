@@ -1,3 +1,4 @@
+import cv2
 import requests
 from pprint import pprint
 
@@ -7,6 +8,7 @@ url = 'https://dog.ceo/api/breeds/image/random'
 
 def get_data():
     response = requests.get(url).json()
+    cv2.imshow(response)
     print('response = ', response)
 
 
