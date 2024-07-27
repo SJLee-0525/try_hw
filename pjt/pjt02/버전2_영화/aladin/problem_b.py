@@ -31,7 +31,7 @@ def get_best_review_books(api_key):
 
 # 아래 코드는 수정하지 않습니다.
 if __name__ == '__main__':
-    api_key = 'ttbyts02751555001'
+    api_key = '알라딘 api 키 입력'
     pprint(get_best_review_books(api_key))
 
 '''

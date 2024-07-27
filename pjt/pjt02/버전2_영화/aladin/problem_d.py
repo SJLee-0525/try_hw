@@ -5,7 +5,7 @@ from pprint import pprint
 def get_author_other_books(title):
     # 여기에 코드를 작성합니다.
     URL = 'http://www.aladin.co.kr/ttb/api/ItemSearch.aspx'
-    api_key = 'ttbyts02751555001'
+    api_key = '알라딘 api 키 입력'
 
     params = {
     'ttbkey': {api_key},
