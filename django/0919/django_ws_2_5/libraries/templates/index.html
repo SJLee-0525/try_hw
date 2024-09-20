@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <nav class="navbar navbar-expand bg-body-tertiary">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="{% url "index" %}" class="nav-link active">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url "recommend" %}" class="nav-link">Recommend</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url "bestseller" %}" class="nav-link">Bestseller</a>
+                </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="card-group">
+        <div class="card">
+            <div class="card-header">
+              도서 관리 시스템
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>도서 관리 시스템은 도서를 효율적으로 관리하고, 시간 및 베스트 셀러를 추천하는 서비스입니다.</p>
+              </blockquote>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="card-header">
+              서비스 소개
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>도서 관리 시스템은 도서관이나 도서 판매 업체에서 사용할 수 있는 편리한 도서 관리 솔루션입니다. 이 시스템을 통해 도서 정보를 등록, 수정, 삭제할 수 있으며, 도서의 시간 정보를 확인하거나 베스트 셀러 목록을 확인하여 독자들에게 추천할 수있스빈다. 간단하고 직관적인 사용자 인터페이스로 펺리한 도서 관리를 지원합니다.</p>
+              </blockquote>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
