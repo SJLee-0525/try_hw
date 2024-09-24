@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>게시글 생성 페이지</h1>
+  <form action="{% url "articles:create" %}" method='POST'>
+    {% csrf_token %}
+    <div>
+      <a>제목: </a>
+      <input type="text" name='title'>
+    </div>
+    <div>
+      <a>내용: </a>
+      <textarea name="content" id=""></textarea>
+    </div>
+    <div>
+      <input type="submit" value=CREATE>
+    </div>
+  </form>
+  <a href="{% url "articles:index" %}">[BACK]</a>
+</body>
+</html>

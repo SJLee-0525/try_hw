@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>식당 수정 페이지</h1>
+  <form action="{% url 'restaurants:update' restaurant.pk %}" method="POST">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">식당 이름</span>
+      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="name" name="name">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">식당 설명</span>
+      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" type="text" id="description" name="description">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">식당 주소</span>
+      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="address" id="address">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">전화 번호</span>
+      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="phone_number" id="phone_number">
+    </div>
+    <button type="submit" class="btn btn-primary">UPDATE</button>
+  </form>
+  <a class="btn btn-dark" href="{% url 'restaurants:index' %}">[BACK]</a>
+{% endblock content %}
