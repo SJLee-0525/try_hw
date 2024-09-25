@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>메뉴 리스트</h1>
+  <a href="{% url 'menus:create' %}">[CREATE]</a>
+  <ul>
+    {% for menu in menus %}
+      <li>{{ menu.name }}</li>
+      <li>{{ menu.price }}원</li>
+      <a href="{% url 'menus:detail' menu.pk %}">[DETAIL]</a>
+      <hr>
+    {% endfor %}
+  </ul>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>메뉴 상세 정보</h1>
+  <p>등록번호 : {{ menu.pk }}</p>
+  <p>이름 : {{ menu.name }}</p>
+  <hr>
+  <p>가격 : {{ menu.price }}원</p>
+  {% if menu.is_vegan %}
+    <p>채식 위주의 식단 구성!</p>
+  {% else %}
+    <p>고기를 포함한 식단 구성!</p>
+  {% endif %}
+  <p>설명 : {{ menu.description }}</p>
+  <hr>
+  <a href="{% url 'menus:update' menu.pk %}">[UPDATE]</a>
+  <form action="{% url 'menus:delete' menu.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="DELETE">
+  </form>
+  <a href="{% url 'menus:index' %}">[BACK]</a>
+{% endblock content %}
