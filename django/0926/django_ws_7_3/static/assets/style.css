@@ -1,0 +1,9 @@
+img {
+  margin: 0;
+  padding: 0;
+}
+
+.noimage {
+  width: 300px;
+  height: 300px;
+}
