@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>hello, {{ user.username }}</h3>
+  <a href="{% url 'accounts:login' %}">[LOGIN]</a>
+  <form action="{% url 'accounts:logout' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="LOGOUT">
+  </form>
+  <h1>전체 유저 목록</h1>
+  <ul>
+    {% for person in persons %}
+      <li>{{ person.username }}</li>
+      <ul>
+        <li>{{person.score}}</li>
+        <form action="{% url "accounts:scoreup" person.pk %}" method='POST'>
+          {% csrf_token %}
+          <input type="submit" value='+'>
+        </form>
+      </ul>
+      <hr>
+    {% endfor %}
+  </ul>
+{% endblock content %}
