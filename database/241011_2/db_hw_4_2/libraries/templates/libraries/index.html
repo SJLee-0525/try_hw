@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>책 전체 목록</h1>
+  <ul>
+    {% for book in books %}
+      <a href="{% url "libraries:detail" book.pk %}">
+        <li>제목: {{ book.title }}</li>
+      </a>
+      <hr>
+    {% empty %}
+      <li>책 목록이 없습니다</li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

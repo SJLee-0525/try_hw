@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form action="{% url "restaurants:menu_update" restaurant.pk menu.pk %}" method="POST">
+    {% csrf_token %}
+    {{ menu_form.as_p }}
+    <input type="submit" value='정보 수정'>
+  </form>
+  <a href="{% url "restaurants:detail" restaurant.pk %}">[돌아가기]</a>
+{% endblock content %}
+

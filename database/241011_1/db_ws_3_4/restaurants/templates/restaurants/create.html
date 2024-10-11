@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>신규 레스토랑 등록</h1>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="등록">
+</form>
+<a href="{% url 'restaurants:index' %}">[돌아가기]</a>
+{% endblock content %}

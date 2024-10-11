@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>레스토랑 상세 정보</h1>
+<p>등록 번호: {{ restaurant.pk }}</p>
+<p>종류: {{ restaurant.name }}</p>
+<p>이름: {{ restaurant.descriptions }}</p>
+<p>주소: {{ restaurant.address }}</p>
+<p>여는 시간: {{ restaurant.opening_time }}</p>
+<p>닫는 시간: {{ restaurant.closing_time }}</p>
+<hr>
+{{ restaurant.category.name }}
+<hr>
+<a href="{% url "restaurants:index" %}">[돌아가기]</a>
+{% endblock content %}
