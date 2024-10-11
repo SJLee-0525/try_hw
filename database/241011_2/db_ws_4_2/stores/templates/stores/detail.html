@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>편의점 상세 정보</h1>
+  <p>점장 : {{ store.user }}</p>
+  <p>주소 : {{ store.address }}</p>
+  <p>체인점 여부 : {{ store.is_franchise }}</p>
+  <hr>
+  <a href="{% url 'stores:index' %}">[전체 목록 보기]</a>
+{% endblock content %}

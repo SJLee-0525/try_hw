@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>직원 전체 목록</h1>
+  <ul>
+    {% for member in members %}
+      <li>이름 : {{ member.username }}</li>
+      <li>admin 여부 : {{ member.is_superuser }}</li>
+      <li>staff 여부 : {{ member.is_staff }}</li>
+      {% if member.pk == request.user.pk %}
+        <a href="{% url "accounts:update_user" %}">[회원 정보 수정]</a>
+      {% endif %}
+      <hr>
+    {% endfor %}
+  </ul>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>전체 편의점 목록</h1>
+<a href="{% url 'stores:stores_create' %}">[신규 매장 등록]</a>
+<ul>
+  {% for store in stores %}
+  <a href="{% url 'stores:detail' store.pk %}">
+    <li>점장 : {{ store.user.username }}</li>
+    <li>주소 : {{ store.address }}</li>
+  </a>
+  <hr>
+  {% endfor %}
+</ul>
+{% endblock content %}

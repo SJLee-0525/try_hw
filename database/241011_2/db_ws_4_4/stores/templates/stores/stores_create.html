@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>신규 매장 등록 페이지</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="등록">
+  </form>
+  <a href="{% url 'stores:index' %}">[돌아가기]</a>
+{% endblock content %}

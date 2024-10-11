@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>전체 직원 목록</h1>
+
+<ul>
+    {% for t_user in users %}
+        <li>이름: {{ t_user.username }}</li>
+        <li>admin 여부: {{ t_user.is_superuser }}</li>
+        <li>staff 여부: {{ t_user.is_staff }}</li>
+        <hr>
+    {% empty %}
+        <li>직원이 없습니다.</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
+
