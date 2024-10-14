@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>레스토랑 상세 정보</h1>
+
+<p>등록 번호 : {{ restaurant.pk }}</p>
+<p>종류 : {{ restaurant.category }}</p>
+<p>이름 : {{ restaurant.name }}</p>
+<p>주소 : {{ restaurant.address }}</p>
+<p>여는 시간 : {{ restaurant.opening_time }}</p>
+<p>닫는 시간 : {{ restaurant.closing_time }}</p>
+<hr>
+<p>{{ restaurant.descriptions }}</p>
+<hr>
+<h3>신규 메뉴 등록</h3>
+<form action="{% url 'restaurants:menus_create' restaurant.pk %}" method="POST">
+  {% csrf_token %}
+  {{ menu_form.as_p }}
+  <input type="submit" value="메뉴 등록">
+</form>
+<hr>
+<h3>전체 메뉴 목록</h3>
+<ul>
+  {% for menu in menus %}
+    <li>이름 : {{ menu.name }}</li>
+    <li>가격 : {{ menu.price }}</li>
+    <a href="{% url 'restaurants:menus_update' restaurant.pk menu.pk %}">[메뉴 정보 수정]</a>
+  {% endfor %}
+</ul>
+<a href="{% url 'restaurants:index' %}">[돌아가기]</a>
+{% endblock content %}

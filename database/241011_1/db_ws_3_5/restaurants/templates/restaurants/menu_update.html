@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>메뉴 정보 수정 페이지</h1>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="정보 수정">
+</form>
+<a href="{% url 'restaurants:detail' restaurant.pk %}">[돌아가기]</a>
+{% endblock content %}
