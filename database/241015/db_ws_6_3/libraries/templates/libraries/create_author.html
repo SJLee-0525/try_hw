@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>작가 생성 페이지</h1>
+  <form action="{% url "libraries:create_author" %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value='create'>
+  </form>
+{% endblock content %}
