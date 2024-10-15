@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ author.nickname }}의 소설 목록</h1>
+    <p>구독자 수 : {{ author.subscribed_users.count }}</p>
+    <form action="{% url "accounts:follow" author.pk %}" method="POST">
+        {% csrf_token %}
+        {% if request.user in author.subscribed_users.all %}
+            <input type="submit" value="구독 취소">
+        {% else %}
+            <input type="submit" value="구독">
+        {% endif %}
+    </form>
+
+    <ul>
+        {% for book in books %}
+            <li>{{ book.title }}</li>
+        {% empty %}
+            <li>소설이 없습니다</li>
+        {% endfor %}
+    </ul>
+    <hr>
+{% endblock content %}
+

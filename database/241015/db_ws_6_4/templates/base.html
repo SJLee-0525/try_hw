@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="{% url 'index' %}">[메인 페이지]</a>
+  {% if request.user.is_authenticated %}
+    <h3>반갑습니다. {{ user.username }}님!</h3>
+    <a href="{% url 'accounts:profile' user.username %}">[내 프로필]</a>
+    <form action="{% url 'accounts:logout' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="Logout">
+    </form>
+    <form action="{% url 'accounts:delete' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="회원탈퇴">
+    </form>
+  {% else %}
+    <h3>로그인 해 주세요.</h3>
+    <a href="{% url 'accounts:login' %}">[Login]</a>
+    <a href="{% url 'accounts:signup' %}">[Sign Up]</a>
+  {% endif %}
+  <hr>
+  <a href="{% url 'libraries:books' %}">[소설 보러 가기]</a>
+  
+  {% block content %}
+  {% endblock content %}
+</body>
+</html>

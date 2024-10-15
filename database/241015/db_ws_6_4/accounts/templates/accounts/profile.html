@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ person.username }}님의 프로필</h1>
+  <a href="{% url 'libraries:create_author' %}">[작가 생성하기]</a>
+  <hr>
+  <h2>{{ person.username }}의 작가명 모음</h2>
+  <ul>
+    {% for author in person.author_set.all %}
+      <li>{{ author.nickname }}</li>
+    {% endfor %}
+  </ul>
+  <hr>
+{% endblock content %}
