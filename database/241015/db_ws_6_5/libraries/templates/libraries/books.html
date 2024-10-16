@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>전체 소설 목록</h1>
+  <a href="{% url 'libraries:books_create' %}">[책 쓰러 가기]</a>
+  <ul>
+    {% for book in books %}
+      <li>{{ book.title }}</li>
+      <li>
+        <a href="{% url 'libraries:author_books' book.author.pk %}">
+          {{ book.author.nickname }}</li>
+        </a>
+      <hr>
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
