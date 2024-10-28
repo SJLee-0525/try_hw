@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .font-crimson {
+      color: crimson;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="heading">Hover me!</h1>
+  <h2 class="sub-heading">Double Click me!</h2>
+  <p class="contents">Lorem ipsum dolor sit amet consectetur</p>
+
+  <script>
+    const randomTexts = [
+      'Lorem ipsum dolor sit amet consectetu',
+      'adipisicing elit. Repellendus delectus quam',
+      'similique quo ipsam maxime totam alias',
+      'quibusdam repudiandae voluptas dicta',
+      'voluptas voluptatibus exercitationem officiis'
+    ]
+
+    // 아래에 코드 작성
+    const h1Tag = document.querySelector('h1')
+
+    const h1FuncOver = function (event) {
+      event.target.textContent = 'I am being hovered!'
+    }
+
+    const h1FuncIn = function (event) {
+      event.target.textContent = 'Hover me!'
+    }
+
+    h1Tag.addEventListener('mouseover', h1FuncOver)
+    h1Tag.addEventListener('mouseout', h1FuncIn)
+
+
+    const h2Tag = document.querySelector('h2')
+
+    const h2Func = function (event) {
+      h2Tag.classList.toggle('font-crimson')
+    }
+
+    // 더블클릭이 자꾸 선택 블럭?을 생성하는지 잘 안 됨.. 'dbclick'
+    h2Tag.addEventListener('click', h2Func)
+
+    const pTag = document.querySelector('p')
+
+    const pTagFunc = function (event) {
+      const randomIndex = Math.floor(Math.random() * randomTexts.length)
+      pTag.textContent = randomTexts[randomIndex]
+    }
+    
+    pTag.addEventListener('wheel', pTagFunc)
+  </script>
+</body>
+
+</html>
