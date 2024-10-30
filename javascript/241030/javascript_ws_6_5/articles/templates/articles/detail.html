@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>DETAIL</h2>
+  <h3>{{ article.pk }} 번째 글</h3>
+  <hr>
+  <p>제목 : {{ article.title }}</p>
+  <p>내용 : {{ article.content }}</p>
+  <p>작성시각 : {{ article.created_at }}</p>
+  <p>수정시각 : {{ article.updated_at }}</p>
+  <hr>
+  {% if user == article.user %}
+    <a href="{% url 'articles:update' article.pk %}">[UPDATE]</a>
+    <form action="{% url 'articles:delete' article.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="DELETE">
+    </form>
+  {% endif %}
+  <a href="{% url 'articles:index' %}">[back]</a>
+  <hr>
+  <h4>댓글 목록</h4>
+  {% if comments %}
+    <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+  {% endif %}
+  <ul id="comment-list">
+    {% for comment in comments %}
+      <li id="comment-{{ comment.pk }}" data-comment-pk="{{ comment.pk }}">
+        {{ comment.user }} - <span> {{ comment.content }} </span>
+        {% if user == comment.user %}
+          <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST" class="d-inline">
+            {% csrf_token %}
+            <input type="submit" value="DELETE">
+          </form>
+          <button id="comment-update" data-comment-id="{{comment.pk}}" data-article-id="{{article.pk}}">{% csrf_token %}수정</button>
+        {% endif %}
+      </li> 
+    {% endfor %}
+  </ul>
+
+  <hr>
+  {% if request.user.is_authenticated %}
+    <form id="comment-form">
+      {% csrf_token %}
+      {{ comment_form }}
+      <input type="submit">
+    </form>
+  {% else %}
+    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+  {% endif %}
+{% endblock content %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const form = document.querySelector('#comment-form')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    const input = document.querySelector('[name=content]')
+    const updateTags = document.querySelectorAll('#comment-update')
+    
+    // 댓글 생성
+    form.addEventListener('submit', function (event) {
+      event.preventDefault()
+      let data = new FormData()
+      data.append('content', input.value)
+      
+      axios({
+        method: 'post',
+        url: `http://127.0.0.1:8000/articles/{{article.pk}}/comments/`,
+        data,
+        headers: {
+          'X-CSRFToken': csrftoken}
+      })
+        .then(response => {
+          const { commentPk, articlePk } = response.data
+          const li = document.createElement('li')
+          li.innerHTML = `
+            {{ request.user.username }} - <span>${input.value}</span>
+            <form action="/articles/${articlePk}/comments/${commentPk}/delete/" method="POST" class="d-inline">
+              {% csrf_token %}
+              <input type="submit" value="DELETE">
+            </form>
+            <button id="comment-update">수정</button>
+          `
+          const ul = document.querySelector('#comment-list')
+          ul.append(li)
+
+          input.value = ''
+        })
+    })
+
+
+    //댓글 수정
+    const commentContainer = document.querySelector('#comment-list')
+    const csrf = document.querySelector('input[name="csrfmiddlewaretoken"]').value
+
+    commentContainer.addEventListener('click', function(event) {
+      if (event.target.id === 'comment-update') {
+        console.log("수정 버튼 클릭!")
+        const commentId = event.target.dataset.commentId
+        const articleId = event.target.dataset.articleId
+        const comment = event.target.parentElement
+        const liContent = comment.querySelector('span').textContent
+        newContent = prompt('수정할 내용을 입력하세요', liContent)
+
+        if(newContent !== liContent && newContent !== null){
+          const data = new FormData()
+          data.append('content', newContent)
+          axios({
+            method: 'POST',
+            url: `/articles/${articleId}/comments/${commentId}/update/`,
+            headers: {
+              'X-CSRFToken': csrf,
+            },
+            data,
+          }).then((response) => {
+            comment.querySelector('span').textContent = newContent
+          }).catch((error) => {
+            console.error(error)
+          })
+        }
+      }
+    })
+  </script>
+{% endblock script %}
+

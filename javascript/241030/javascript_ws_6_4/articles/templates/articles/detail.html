@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>DETAIL</h2>
+  <h3>{{ article.pk }} 번째 글</h3>
+  <hr>
+  <p>제목 : {{ article.title }}</p>
+  <p>내용 : {{ article.content }}</p>
+  <p>작성시각 : {{ article.created_at }}</p>
+  <p>수정시각 : {{ article.updated_at }}</p>
+  <hr>
+  {% if user == article.user %}
+    <a href="{% url 'articles:update' article.pk %}">[UPDATE]</a>
+    <form id="delete-form" data-article-id="{{article.pk}}">
+      {% csrf_token %}
+      <input type="submit" value="DELETE">
+    </form>
+  {% endif %}
+  <a href="{% url 'articles:index' %}">[back]</a>
+  <hr>
+  <h4>댓글 목록</h4>
+  {% if comments %}
+    <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+  {% endif %}
+  <ul class="comment-container">
+    {% for comment in comments %}
+      <li>
+        {{ comment.user }} - {{ comment.content }}
+        {% if user == comment.user %}
+          <form class="d-inline" id="delete-comment-form" data-article-id="{{article.pk}}" data-comment-id="{{comment.pk}}">
+            {% csrf_token %}
+            <input type="submit" value="DELETE">
+          </form>
+          <button id="comment-update" data-comment-id="{{comment.pk}}" data-article-id="{{article.pk}}">UPDATE</button>
+        {% endif %}
+      </li>
+    {% empty %}
+      <p>댓글이 없어요..</p>
+    {% endfor %}
+  </ul>
+
+  <hr>
+  {% if request.user.is_authenticated %}
+    <form id="comment-create-form" data-article-id="{{article.pk}}">
+      {% csrf_token %}
+      {{ comment_form }}
+      <input type="submit">
+    </form>
+  {% else %}
+    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+  {% endif %}
+
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const deleteForm = document.querySelector('#delete-form');
+    const csrf = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+    deleteForm.addEventListener('submit', function(event) {
+      articleId = this.dataset.articleId;
+      event.preventDefault();
+      if (confirm('정말 삭제하시겠습니까?')) {
+        axios({
+          method: 'POST',
+          url: `/articles/${articleId}/delete/`,
+          headers: {
+            'X-CSRFToken': csrf,
+          },
+        }).then(function(response) {
+          location.href = '/articles/';
+        }).catch(function(error) {
+          console.error(error);
+        });
+      }
+    });
+
+    // 댓글 삭제
+    const commentContainer = document.querySelector('.comment-container');
+    commentContainer.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const articleId = event.target.dataset.articleId;
+      const commentId = event.target.dataset.commentId;
+      if (confirm('정말 삭제하시겠습니까?')) {
+        axios({
+          method: 'POST',
+          url: `/articles/${articleId}/comments/${commentId}/delete/`,
+          headers: {
+            'X-CSRFToken': csrf,
+          },
+        }).then(function(response) {
+          location.href = `/articles/${articleId}/`;
+        }).catch(function(error) {
+          console.error(error);
+        });
+      }
+    });
+    // 댓글 생성
+    const commentCreateForm = document.querySelector('#comment-create-form');
+    commentCreateForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const articleId = event.target.dataset.articleId;
+      const formData = new FormData(commentCreateForm);
+      axios({
+        method: 'POST',
+        url: `/articles/${articleId}/comments/`,
+        headers: {
+          'X-CSRFToken': csrf,
+        },
+        data: formData,
+      }).then(function(response) {
+        const deleteForm = document.createElement('form');
+        deleteForm.classList.add('d-inline');
+        deleteForm.id = 'delete-comment-form';
+        deleteForm.dataset.articleId = articleId;
+        deleteForm.dataset.commentId = response.data.pk;
+        deleteForm.innerHTML = `<input type="submit" value="DELETE">`;
+
+        const updateButton = document.createElement('button')
+        updateButton.id = 'comment-update'
+        updateButton.textContent = 'UPDATE'
+        updateButton.dataset.commentId = response.data.pk
+
+        const li = document.createElement('li');
+        li.textContent = `${response.data.username} - ${response.data.content}`;
+        li.appendChild(deleteForm);
+        li.appendChild(updateButton)
+        commentContainer.appendChild(li)
+        commentCreateForm.reset()
+      }).catch(function(error) {
+        console.error(error);
+      });
+    });
+
+    commentContainer.addEventListener('click', function(event) {
+      console.log(event.target.id)
+      if (event.target.id === 'comment-update') {
+        console.log('수정 버튼 클릭')
+      }
+    })
+
+  </script>
+{% endblock content %}
