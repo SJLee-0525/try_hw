@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h1>다양한 전시 정보</h1>
+    <hr>
+    <ul>
+      <li id="영어 제목">
+        <h3>한글 제목</h3>
+        <p>전시 정보 설명</p>
+        <hr>
+        <p>전시 위치</p>
+				<a href="전시장 링크">전시장 바로가기</a>
+        <hr>
+        <p>입장권 구매하기</p>
+        <div>
+          <span>인원 수 : {{ numberOfPeople }} 명 </span>
+          <button v-on:click="decreasePeople">-</button>
+          <button v-on:click="increasePeople">+</button>
+        </div>
+        <p>총 입장료 : {{ totalPrice }} 원</p>
+        <hr>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue 
+    const app = createApp({
+      setup() {
+        const numberOfPeople = ref(0)
+        const totalPrice = ref(0)
+        const decreasePeople = function () {
+          numberOfPeople.value--
+          totalPrice.value = numberOfPeople.value * 1000
+          console.log(numberOfPeople.value)
+        }
+        const increasePeople = function () {
+          numberOfPeople.value++
+          totalPrice.value = numberOfPeople.value * 1000
+          console.log(numberOfPeople)
+        }
+        return {
+          numberOfPeople,
+          totalPrice,
+          decreasePeople,
+          increasePeople,
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

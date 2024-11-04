@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .is-selected {
+      background-color: #eee;
+    }
+
+    .is-required {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>다양한 전시 정보</h1>
+    <hr>
+    <ul>
+      <li :id="enTitle" :class="{ 'is-selected': isSelected }">
+        <label for="selected">전시 선택</label>
+        <input type="checkbox" name="selected" id="selected" v-model="isSelected">
+        <h3>{{ koTitle }}</h3>
+        <p v-html="description">전시 정보 설명</p>
+        <hr>
+        <p>전시 위치</p>
+        <a :href="museumURL">전시장 바로가기</a>
+        <hr>
+        <p>입장권 구매하기</p>
+        <p>가격: 1000</p>
+        <div>
+          <span :class="{ 'is-required': isRequired }">인원 수 : {{ totalNum }} 명 </span>
+          <button v-on:click="decreasePeople" :disabled="isRequired">-</button>
+          <button v-on:click="increasePeople" :disabled="isDisabled">+</button>
+        </div>
+        <hr>
+      </li>
+    </ul>
+    <p>총 입장료 : {{ totalNum * price }} 원</p>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    /*
+    - Vue3 CDN을 사용한다.
+    1. 현재 입장 인원의 수가 0명 초과일 때만, 인원 감소 메서드가 실행되도록 코드를 수정하시오.
+    2. 현재 입장 인원의 수가 10명 미만일 때만, 인원 증가 메서드가 실행되도록 코드를 수정하시오.
+    3. 인원 증/감 버튼에 disabled 속성을 부여하시오.
+      - 단, 인원수 기준에 따라 true/false가 할당되도록 한다.
+      - 인원수 기준은 최소 0명 이상 최대 10명 이하이다.
+    */
+    const { createApp, ref } = Vue 
+    const app = createApp({
+      setup() {
+        const koTitle = ref('모네 인사이드')
+        const enTitle = ref('monet-inside')
+        const artMuseum = ref('예술의 전당')
+        const museumURL = ref('https://www.sac.or.kr/')
+        const description = ref('<p> &lt;모네 인사이드&gt; 는 빛의 화가 <b>클로드 모네</b>가 남긴 소중한 명작들을 현대적 감각으로 재해석해 음악과 함께 감상하는 미디어아트 전시입니다. </p>')
+        const isSelected = ref(false)
+        const isRequired = ref(true)
+        const isDisabled = ref(false)
+        const price = ref(1000)
+        const totalNum = ref(0)
+        const decreasePeople = function () {
+          if (totalNum.value > 0) {
+            totalNum.value--
+            if (totalNum.value < 10) {
+              isDisabled.value = false
+              if (totalNum.value <= 0) {
+                isRequired.value = true
+              }
+            }
+          }
+        }
+        const increasePeople = function () {
+          if (totalNum.value < 10) {
+            totalNum.value++
+            if (totalNum.value > 0) {
+              isRequired.value = false
+              if (totalNum.value >= 10) {
+                isDisabled.value = true
+              }
+            }
+          }
+        }
+        return {
+          koTitle,
+          enTitle,
+          artMuseum,
+          museumURL,
+          description,
+          isSelected,
+          isRequired,
+          price,
+          totalNum,
+          isDisabled,
+          decreasePeople,
+          increasePeople,
+        }    
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
